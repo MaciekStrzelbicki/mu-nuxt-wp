@@ -5,7 +5,7 @@
 <script>
 
 import api from '@/api/index';
-import PostList from '@/components/PostList.vue'
+import PostList from '@/components/PostList.vue';
 export default {
   components:{
     PostList

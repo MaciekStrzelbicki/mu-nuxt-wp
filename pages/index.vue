@@ -17,6 +17,8 @@ import postList from '../components/PostList';
 import recentPosts from '../components/RecentPosts';
 import categories from '../components/Categories';
 import actions from '../store/actions.js'
+import axios from 'axios';
+import config from '../api/config/index.js'
 export default {
   components: { postList, categories, recentPosts },
   async asyncData({ params }) {
@@ -39,14 +41,20 @@ export default {
   },
   methods: {
     paginate: (e) => {
-      console.log('e: ', e); 
-      console.log(this)     
-      api.getPosts('page=' + e).then(response => {
-        const data = [...response.data];
-        if (response.status === 200 && response.data.length > 0) {
-          return(data);
-        } 
-      })
+        return axios.get(config.baseUrl + `posts?page=2`)
+        .then((res) => {
+          return { posts: res.data }
+        })
+        .catch((e) => {
+          error({ statusCode: 404, message: 'Post not found' })
+        })
+      // console.log('this: ', this);      
+      // api.getPosts('page=' + e).then(response => {
+      //   const data = [...response.data];
+      //   if (response.status === 200 && response.data.length > 0) {
+      //     resolve(data);
+      //   } 
+      // })
     }
   }
 }

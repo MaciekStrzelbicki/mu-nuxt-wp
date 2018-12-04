@@ -1,11 +1,9 @@
 <template>
   <div>
-      totalPosts: {{ totalPosts }}
-      <a href="#" @click.prevent="paginate('1')" data-page="1">1</a>
-      <a href="#" @click.prevent="paginate('2')" data-page="2">2</a>
-      <a href="#" @click.prevent="paginate('3')" data-page="3">3</a>
-      <categories :categories="categories"></categories>
-      <post-list v-if="posts" :posts="posts"></post-list>
+    <categories :categories="categories"></categories>
+    <a href="#" @click.prevent="paginate('2')">paginate</a>
+    <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages"></posts-pagination>
+    <post-list v-if="posts" :posts="posts"></post-list>
   </div>
 </template>
 
@@ -13,53 +11,46 @@
 
 import { mapGetters } from 'vuex';
 import api from '../api/index.js';
+import config from '../api/config/index.js'
 import postList from '../components/PostList';
 import recentPosts from '../components/RecentPosts';
 import categories from '../components/Categories';
-import actions from '../store/actions.js'
+import postsPagination from '../components/postsPagination';
 import axios from 'axios';
-import config from '../api/config/index.js'
+
 export default {
-  components: { postList, categories, recentPosts },
+  components: { postList, categories, recentPosts, postsPagination },
   async asyncData({ params }) {
-    let { data } = await api.getPosts('page=1')
+    let  response  = await api.getPosts()
     return {
-      posts: data,
-      totalPosts: params.totalPosts
+      posts: response.data,
+      totalPages: response.totalPages,
+      totalPosts: response.total
     }
   },
   mounted() {
     if (this.categories.length === 0) {
       this.$store.dispatch('getCategories')
     }
-    // this.paginate(2)
+    if (this.posts.length === 0) {
+      this.$store.dispatch('getPosts')
+    }
   },
   computed: {
     ...mapGetters([
       'categories'
-      ])
+    ])
   },
   methods: {
-    paginate: (e) => {
-        return axios.get(config.baseUrl + `posts?page=2`)
-        .then((res) => {
-          return { posts: res.data }
-        })
-        .catch((e) => {
-          error({ statusCode: 404, message: 'Post not found' })
-        })
-      // console.log('this: ', this);      
-      // api.getPosts('page=' + e).then(response => {
-      //   const data = [...response.data];
-      //   if (response.status === 200 && response.data.length > 0) {
-      //     resolve(data);
-      //   } 
-      // })
+    paginate(page){
+      api.getPosts(`page=${page}`).then( (response) => {
+        this.posts = response.data
+      })
     }
+    
   }
 }
 </script>
 
 <style>
-
 </style>

@@ -2,7 +2,7 @@
   <div>
     <categories :categories="categories"></categories>
     <a href="#" @click.prevent="paginate('2')">paginate</a>
-    <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages"></posts-pagination>
+    <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination>
     <post-list v-if="posts" :posts="posts"></post-list>
   </div>
 </template>
@@ -15,17 +15,19 @@ import config from '../api/config/index.js'
 import postList from '../components/PostList';
 import recentPosts from '../components/RecentPosts';
 import categories from '../components/Categories';
-import postsPagination from '../components/postsPagination';
+import postsPagination from '../components/PostsPagination';
 import axios from 'axios';
 
 export default {
   components: { postList, categories, recentPosts, postsPagination },
+ 
   async asyncData({ params }) {
     let  response  = await api.getPosts()
     return {
       posts: response.data,
       totalPages: response.totalPages,
-      totalPosts: response.total
+      totalPosts: response.total,
+      currentPage: 1
     }
   },
   mounted() {
@@ -44,7 +46,8 @@ export default {
   methods: {
     paginate(page){
       api.getPosts(`page=${page}`).then( (response) => {
-        this.posts = response.data
+        this.posts = response.data;
+        this.currentPage = page;
       })
     }
     

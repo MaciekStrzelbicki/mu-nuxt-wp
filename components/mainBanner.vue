@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <h1>PostList</h1>
-    <div v-for="item in posts" :key="item.id">
-        Promowany: {{ item.promowany_na_glownej }}
+    <div>
+    <div v-if="item.promowany_na_glownej" v-for="item in posts" :key="item.id">
         <img width="100px" :src="item.featured_media" alt="">
         <h3><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h3>
         <a :href="'/' + item.category_slug">{{ item.category_nicename }}</a>
@@ -10,11 +8,9 @@
         <div v-html="item.excerpt"></div>
         <hr>
     </div>
-  </div>
+    </div>
 </template>
-
 <script>
-
 export default {
   props: ['posts', 'title'],
   methods: {
@@ -27,9 +23,6 @@ export default {
   }
 }
 </script>
-
 <style lang="scss">
-  .screen-reader-text{
-    display: none;
-  }
+    
 </style>

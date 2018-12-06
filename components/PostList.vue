@@ -1,8 +1,7 @@
 <template>
   <div>
     <h1>PostList</h1>
-    <div v-for="item in posts" :key="item.id">
-        Promowany: {{ item.promowany_na_glownej }}
+    <div v-if="!item.promowany_na_glownej" v-for="item in posts" :key="item.id">
         <img width="100px" :src="item.featured_media" alt="">
         <h3><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h3>
         <a :href="'/' + item.category_slug">{{ item.category_nicename }}</a>

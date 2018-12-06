@@ -71,11 +71,12 @@ export default {
               excerpt: item.excerpt.rendered,
               content: item.content.rendered,
               slug: item.slug,
-              featured_media: item._embedded['wp:featuredmedia'] ? item._embedded['wp:featuredmedia'][0].source_url : '',
+              featured_media: item._embedded['wp:featuredmedia'] ? item._embedded['wp:featuredmedia'][0].source_url : false, 
               // category_nicename: item.pure_taxonomies.categories[0].category_nicename,
               // category_slug: item.pure_taxonomies.categories[0].category_slug,
               categories: item.pure_taxonomies.categories,
               tags: item.pure_taxonomies.tags,
+              promowany_na_glownej: item.promowany_na_glownej ? item.promowany_na_glownej : false,
             }))
           };
           // console.log('w getPosts() filtered: ', filtered)

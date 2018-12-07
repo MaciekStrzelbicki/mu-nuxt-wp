@@ -76,7 +76,7 @@ export default {
               // category_slug: item.pure_taxonomies.categories[0].category_slug,
               categories: item.pure_taxonomies.categories,
               tags: item.pure_taxonomies.tags,
-              promowany_na_glownej: item.promowany_na_glownej ? item.promowany_na_glownej : false,
+              promowany: item.promowany ? item.promowany[0] : false
             }))
           };
           // console.log('w getPosts() filtered: ', filtered)

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main-banner v-if="posts" :posts="posts"></main-banner>
+    <main-banner v-if="bannerPosts" :posts="bannerPosts"></main-banner>
     <categories :categories="categories"></categories>
     <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination>
     <post-list v-if="posts" :posts="posts"></post-list>
@@ -16,15 +16,20 @@
   import recentPosts from '../components/RecentPosts';
   import categories from '../components/Categories';
   import postsPagination from '../components/PostsPagination';
-  import mainBanner from '../components/mainBanner.vue';
+  import mainBanner from '../components/MainBanner.vue';
   import axios from 'axios';
 
   export default {
     components: { postList, categories, recentPosts, postsPagination, mainBanner },
   
     async asyncData({ params }) {
-      let  response  = await api.getPosts()
+      let response  = await api.getPosts()
+      let bannerPosts = [];
+      response.data.forEach(element => {
+        element.promowany ? bannerPosts.push(element) : ''
+      });
       return {
+        bannerPosts: bannerPosts,
         posts: response.data,
         totalPages: response.totalPages,
         totalPosts: response.total,

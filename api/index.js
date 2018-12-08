@@ -58,7 +58,7 @@ export default {
     console.log("Request posts");
     return new Promise((resolve, reject) => {
       axios.defaults.baseURL = this.baseUrl;
-      axios.get(`posts?_embed&${query}`).then(response => {
+      axios.get(`posts?_embed&per_page=100&${query}`).then(response => {
         const data = [...response.data];
         // console.log('data w getPosts(): ', data);
         if (response.status === 200 && response.data.length > 0) {
@@ -76,7 +76,7 @@ export default {
               // category_slug: item.pure_taxonomies.categories[0].category_slug,
               categories: item.pure_taxonomies.categories,
               tags: item.pure_taxonomies.tags,
-              promowany: item.promowany ? item.promowany[0] : false
+              promowany: item.promowany && item.promowany != 'Niepromowany' ? item.promowany[0] : false
             }))
           };
           // console.log('w getPosts() filtered: ', filtered)

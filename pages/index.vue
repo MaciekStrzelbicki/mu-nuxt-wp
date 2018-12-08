@@ -3,7 +3,7 @@
     <main-banner v-if="bannerPosts" :posts="bannerPosts"></main-banner>
     <categories :categories="categories"></categories>
     <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination>
-    <post-list v-if="posts" :posts="posts"></post-list>
+    <post-list v-if="posts" :posts="posts" :totalPosts="totalPosts" :currentPage="currentPage"></post-list>
   </div>
 </template>
 
@@ -26,7 +26,7 @@
       let response  = await api.getPosts()
       let bannerPosts = [];
       response.data.forEach(element => {
-        element.promowany ? bannerPosts.push(element) : ''
+        element.promowany ? bannerPosts.push(element) : '';
       });
       return {
         bannerPosts: bannerPosts,

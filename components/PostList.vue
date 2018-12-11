@@ -1,16 +1,31 @@
 <template>
   <div>
-    <h1>PostList</h1>
-    <div v-if="!item.promowany" v-for="item in postsPaginated" :key="item.id">
-      <img width="100px" :src="item.featured_media" alt="">
-      <h3><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h3>
-      <a :href="'/' + item.category_slug">{{ item.category_nicename }}</a>
-      <p>item.slug {{ item.slug }} </p>
-      <div v-html="item.excerpt"></div>
-      <hr>
-    </div>
+    <v-container fluid="true" grid-list-md text-xs-center>
+    <v-layout row wrap  >
+      <v-flex xs12 sm3 v-if="!item.promowany" v-for="item in postsPaginated" :key="item.id">
+        <v-card >
+          <v-img
+            :src="item.featured_media"
+            aspect-ratio="2"
+          ></v-img>
+
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline mb-0"><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h3>
+              <div v-html="item.content.substring(0, 200) + '...'"></div>
+            </div>
+          </v-card-title>
+
+          <v-card-actions>
+            <v-btn flat color="white">Czytaj dalej</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+    </v-layout>
     <a v-if="!endPosts" href="#" @click.prevent="addToPostsPaginated()">Następne posty</a>
+    </v-container>
   </div>
+
 </template>
 
 <script>
@@ -73,7 +88,5 @@ export default {
 </script>
 
 <style lang="scss">
-  .screen-reader-text{
-    display: none;
-  }
+
 </style>

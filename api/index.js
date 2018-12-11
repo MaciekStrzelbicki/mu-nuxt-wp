@@ -77,7 +77,7 @@ export default {
               categories: item.pure_taxonomies.categories,
               tags: item.pure_taxonomies.tags,
               promowany: item.promowany && item.promowany != 'Niepromowany' ? item.promowany[0] : false,
-              date: item.date,
+              date: item.date.split('T')[0].split('-')[2] + '-' + item.date.split('T')[0].split('-')[1] + '-' + item.date.split('T')[0].split('-')[0],
               author: item._embedded.author[0]
             }))
           };

@@ -76,7 +76,9 @@ export default {
               // category_slug: item.pure_taxonomies.categories[0].category_slug,
               categories: item.pure_taxonomies.categories,
               tags: item.pure_taxonomies.tags,
-              promowany: item.promowany && item.promowany != 'Niepromowany' ? item.promowany[0] : false
+              promowany: item.promowany && item.promowany != 'Niepromowany' ? item.promowany[0] : false,
+              date: item.date,
+              author: item._embedded.author[0]
             }))
           };
           // console.log('w getPosts() filtered: ', filtered)

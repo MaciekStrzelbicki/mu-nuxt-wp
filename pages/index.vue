@@ -1,7 +1,6 @@
 <template>
   <div>
     <main-banner v-if="bannerPosts" :posts="bannerPosts"></main-banner>
-    <categories :categories="categories"></categories>
     <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination>
     <post-list v-if="posts" :posts="posts" :totalPosts="totalPosts" :currentPage="currentPage"></post-list>
   </div>

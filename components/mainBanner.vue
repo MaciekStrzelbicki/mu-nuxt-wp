@@ -1,55 +1,71 @@
 <template>
     <div id="mainbanner">
       <v-container fluid="true">
-      <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 md8>
-          <v-layout align-end id="prom1" tag="section" dark v-if="item.promowany == '1'" v-for="item in posts" :key="item.id" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }">
-            <div class="overlay">
-              <div id="catbar">
-                <a :href="'/category/' + category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
-              </div>
-              <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
-              <div class="excerpt" v-html="item.content.substring(0, 300) + '...'">
-              </div>
-              <div class="post-footer">
-                <p><v-icon>calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
-                <p><v-icon>face</v-icon>&nbsp;&nbsp;<nuxt-link :to="'/author/' + item.author.slug">{{ item.author.name }}</nuxt-link></p> 
-                <p><nuxt-link :to="slugToUrl(item.slug)">Czytaj dalej <v-icon>navigate_next</v-icon></nuxt-link></p>
-              </div>
-            </div>
-          </v-layout>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md4>
-          <v-layout column wrap>
-            <v-flex d-flex>
-              <v-layout row wrap>
-                <v-flex >
-                  <v-layout align-end id="prom2" tag="section" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }" class="prom" v-if="item.promowany == '2'" v-for="item in posts" :key="item.id">
-                    <div class="overlay">
-                      <div id="catbar">
-                        <a :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
-                      </div>            
-                      <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
-                      <!-- <div class="excerpt" v-html="item.content.substring(0, 100) + '...'"></div> -->
-                    </div>
-                  </v-layout>
-                </v-flex>
-                <v-flex >
-                  <v-layout align-end id="prom3" tag="section" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }" class="prom" v-if="item.promowany == '3'" v-for="item in posts" :key="item.id">
-                    <div class="overlay">
-                      <div id="catbar">
-                        <a :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
-                      </div>            
-                      <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
-                      <!-- <div class="excerpt" v-html="item.content.substring(0, 100) + '...'"></div> -->
-                    </div>
-                  </v-layout>
-                </v-flex>
+        <v-layout  row wrap>
+          <v-flex d-flex xs12 sm6 md8>
+            <v-card id="prom1" tag="section" dark v-if="item.promowany == '1'" v-for="item in posts" :key="item.id" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }">
+              <v-layout align-end fill-height>
+                <div class="overlay">
+                  <div id="catbar">
+                    <a :href="'/category/' + category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
+                  </div>
+                  <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
+                  <div class="excerpt" v-html="item.content.substring(0, 300) + '...'">
+                  </div>
+                  <div class="post-footer">
+                    <p><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
+                    <p><v-icon size="14">face</v-icon>&nbsp;&nbsp;<nuxt-link :to="'/author/' + item.author.slug">{{ item.author.name }}</nuxt-link></p> 
+                    <p><nuxt-link :to="slugToUrl(item.slug)">Czytaj dalej <v-icon size="14">navigate_next</v-icon></nuxt-link></p>
+                  </div>
+                </div>
               </v-layout>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-      </v-layout>
+            </v-card>
+          </v-flex>
+          <v-flex d-flex xs12 sm6 md4>
+            <v-layout column wrap>
+              <!-- <v-flex d-flex> -->
+                <!-- <v-layout row wrap> -->
+                  <v-flex >
+                    <v-card align-end id="prom2" tag="section" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }" class="prom" v-if="item.promowany == '2'" v-for="item in posts" :key="item.id">
+                      <v-layout align-end fill-height>
+                        <div class="overlay">
+                          <div id="catbar">
+                            <a :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
+                          </div>            
+                          <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
+                          <!-- <div class="excerpt" v-html="item.content.substring(0, 100) + '...'"></div> -->
+                          <div class="post-footer">
+                            <p><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
+                            <p><v-icon size="14">face</v-icon>&nbsp;&nbsp;<nuxt-link :to="'/author/' + item.author.slug">{{ item.author.name }}</nuxt-link></p> 
+                            <p><nuxt-link :to="slugToUrl(item.slug)">Czytaj dalej <v-icon size="14">navigate_next</v-icon></nuxt-link></p>
+                          </div>
+                        </div>
+                      </v-layout>
+                    </v-card>
+                  </v-flex>
+                  <v-flex >
+                    <v-card align-end id="prom3" tag="section" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }" class="prom" v-if="item.promowany == '3'" v-for="item in posts" :key="item.id">
+                      <v-layout align-end fill-height>
+                        <div class="overlay">
+                          <div id="catbar">
+                            <a :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
+                          </div>            
+                          <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
+                          <!-- <div class="excerpt" v-html="item.content.substring(0, 100) + '...'"></div> -->
+                          <div class="post-footer">
+                            <p><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
+                            <p><v-icon size="14">face</v-icon>&nbsp;&nbsp;<nuxt-link :to="'/author/' + item.author.slug">{{ item.author.name }}</nuxt-link></p> 
+                            <p><nuxt-link :to="slugToUrl(item.slug)">Czytaj dalej <v-icon size="14">navigate_next</v-icon></nuxt-link></p>
+                          </div>                          
+                        </div>
+                      </v-layout>
+                    </v-card>
+                  </v-flex>
+                <!-- </v-layout> -->
+              <!-- </v-flex> -->
+            </v-layout>
+          </v-flex>
+        </v-layout>
       </v-container>
     </div> 
 </template>
@@ -75,27 +91,27 @@ export default {
     #mainbanner{
       h1{
         line-height: 1.2;
-        font-size: 2.1rem;
-        margin-bottom: 5px;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
       }
       #prom1{
         width: 60%;
         height: 500px;
         background-size: cover;
         background-position: center center;
-        margin-right: 20px;
+        margin-right: 6px;
       }
       #prom2{
-        margin-bottom: 10px;
+        margin-bottom: 2px;
         background-size: cover;
         background-position: center center;
-        height: 240px;
+        height: 245px;
       }
       #prom3{
-        margin-top: 10px;
+        margin-top: 2px;
         background-size: cover;
         background-position: center center;
-        height: 240px;
+        height: 250px;
       }
       .overlay{
         // height: 30%;
@@ -127,15 +143,15 @@ export default {
 
         }
         #catbar{
-          background-color: red;
           display: inline-block;
-          padding: 2px 10px;
           margin-bottom: 5px;
           a{
+            padding: 2px 10px;
+            background-color: red;
             color: #fff;
             display: inline-block;
             text-decoration: none;
-            margin: 0 10px;
+            margin: 0 10px 0 0;
             font-size: 0.9rem;
             font-weight: bold;
           }

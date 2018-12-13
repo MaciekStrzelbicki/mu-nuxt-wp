@@ -8,13 +8,24 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  props: ['categories'],
   methods: {
     slugToUrl(slug) {
       return `/category/${slug}`
     }
-  }
+  },
+  mounted() {
+      if (this.categories.length === 0) {
+        this.$store.dispatch('getCategories')
+      }
+  },
+  computed: {
+    ...mapGetters([
+      'categories'
+    ])
+  },
 }
 </script>
 

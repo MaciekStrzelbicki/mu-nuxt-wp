@@ -2,22 +2,23 @@
   <div>
     <v-container fluid="true" grid-list-md text-xs-center>
     <v-layout row wrap  >
-      <v-flex xs12 sm3 v-if="!item.promowany" v-for="item in postsPaginated" :key="item.id">
-        <v-card >
+      <v-flex xs12 sm4 v-if="item.promowany == 'false'" v-for="item in postsPaginated" :key="item.id">
+        <v-card color="rgba(0, 0, 0, 1)" >
           <v-img
             :src="item.featured_media"
-            aspect-ratio="2"
+            aspect-ratio="1.5"
           ></v-img>
-
           <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0"><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h3>
-              <div v-html="item.content.substring(0, 200) + '...'"></div>
-            </div>
+              <h2><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h2>
           </v-card-title>
+          <div class="content" v-html="item.content.substring(0, 180) + '...'"></div>
 
           <v-card-actions>
-            <v-btn flat color="white">Czytaj dalej</v-btn>
+            <div class="post-footer">
+              <p><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
+              <p><v-icon size="14">face</v-icon>&nbsp;&nbsp;<nuxt-link :to="'/author/' + item.author.slug">{{ item.author.name }}</nuxt-link></p> 
+              <p><nuxt-link :to="slugToUrl(item.slug)">Czytaj dalej <v-icon size="14">navigate_next</v-icon></nuxt-link></p>
+            </div> 
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -87,6 +88,34 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+  h2{
+      text-align: left;
+      line-height: 1.2;
+    a{
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+  .content{
+      text-align: left;
+      padding: 0 17px;
+  }
+  .post-footer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    p{
+      margin: 0;
+      a{
+        color: #fff;
+        text-decoration: none;
+      }
+      .v-icon {
+          line-height: 0.8;
+      }
+    }
 
+  }
+  
 </style>

@@ -1,17 +1,16 @@
 <template>
     <div id="mainbanner">
-      <v-container fluid="true">
+      <v-container fluid>
         <v-layout  row wrap>
           <v-flex d-flex xs12 sm6 md8>
-            <v-card id="prom1" tag="section" dark v-if="item.promowany == '1'" v-for="item in posts" :key="item.id" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }">
-              <v-layout align-end fill-height>
+            <v-card id="prom1" tag="section" dark v-if="item.promowany == '1'" v-for="item in posts" :key="item.id">
+              <v-layout align-end fill-height :style='{ backgroundImage: `url(${item.featured_media})` }'>
                 <div class="overlay">
-                  <div id="catbar">
-                    <a :href="'/category/' + category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
+                  <div class="catbar">
+                    <a :class="'class-' + category.term_id" :href="'/category/' + category.slug" v-for="category in item.categories" :key="category.index">{{ category.category_nicename }}</a>
                   </div>
                   <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
-                  <div class="excerpt" v-html="item.content.substring(0, 300) + '...'">
-                  </div>
+                  <div class="excerpt" v-html="item.content.substring(0, 300) + '...'"></div>
                   <div class="post-footer">
                     <p><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
                     <p><v-icon size="14">face</v-icon>&nbsp;&nbsp;<nuxt-link :to="'/author/' + item.author.slug">{{ item.author.name }}</nuxt-link></p> 
@@ -26,11 +25,11 @@
               <!-- <v-flex d-flex> -->
                 <!-- <v-layout row wrap> -->
                   <v-flex >
-                    <v-card align-end id="prom2" tag="section" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }" class="prom" v-if="item.promowany == '2'" v-for="item in posts" :key="item.id">
-                      <v-layout align-end fill-height>
+                    <v-card align-end id="prom2" tag="section" class="prom" v-if="item.promowany == '2'" v-for="item in posts" :key="item.id">
+                      <v-layout align-end fill-height :style='{ backgroundImage: `url(${item.featured_media})` }'>
                         <div class="overlay">
-                          <div id="catbar">
-                            <a :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
+                          <div class="catbar">
+                            <a :class="'class-' + category.term_id" :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
                           </div>            
                           <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
                           <!-- <div class="excerpt" v-html="item.content.substring(0, 100) + '...'"></div> -->
@@ -44,11 +43,11 @@
                     </v-card>
                   </v-flex>
                   <v-flex >
-                    <v-card align-end id="prom3" tag="section" :style="{ backgroundImage: 'url(' + item.featured_media + ')' }" class="prom" v-if="item.promowany == '3'" v-for="item in posts" :key="item.id">
-                      <v-layout align-end fill-height>
+                    <v-card align-end id="prom3" tag="section"  class="prom" v-if="item.promowany == '3'" v-for="item in posts" :key="item.id">
+                      <v-layout align-end fill-height :style='{ backgroundImage: `url(${item.featured_media})` }'>
                         <div class="overlay">
-                          <div id="catbar">
-                            <a :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
+                          <div class="catbar">
+                            <a :class="'class-' + category.term_id" :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
                           </div>            
                           <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
                           <!-- <div class="excerpt" v-html="item.content.substring(0, 100) + '...'"></div> -->
@@ -137,24 +136,16 @@ export default {
               text-decoration: none;
             }
             .v-icon {
-                line-height: 0.8;
+                line-height: 1.1;
             }
           }
 
         }
-        #catbar{
-          display: inline-block;
-          margin-bottom: 5px;
-          a{
-            padding: 2px 10px;
-            background-color: red;
-            color: #fff;
-            display: inline-block;
-            text-decoration: none;
-            margin: 0 10px 0 0;
-            font-size: 0.9rem;
-            font-weight: bold;
-          }
+      }
+      .v-card{
+        .layout{
+          background-size: cover;
+          background-position: center;
         }
       }
     }

@@ -19,7 +19,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-truncate-filter": "^1.1.7",
-    "vuetify": "^1.3.12"
+    "vuetify": "^1.3.14"
   },
   "devDependencies": {
     "@mdi/font": "^3.2.89",

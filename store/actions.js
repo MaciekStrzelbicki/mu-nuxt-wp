@@ -69,3 +69,17 @@ export const getCategories = ({ commit, state }, slug) => {
     );
   });
 };
+
+export const getTweets = ({ commit, state }, slug) => {
+  return new Promise((resolve, reject) => {
+    api.getTweets().then(
+      response => {
+        commit("TWEETS", response);
+        resolve(response);
+      },
+      response => {
+        reject(response);
+      }
+    );
+  });
+};

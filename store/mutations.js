@@ -13,5 +13,8 @@ export default {
   },
   CATEGORIES: (state, categories) => {
     state.categories = categories;
+  },
+  TWEETS: (state, tweets) => {
+    state.tweets = tweets;
   }
 };

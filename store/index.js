@@ -28,7 +28,8 @@ const store = () => {
         name: null,
         slug: null
       },
-      categories: []
+      categories: [],
+      tweets: null
     },
     actions,
     mutations,

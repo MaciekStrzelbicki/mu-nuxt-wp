@@ -3,7 +3,7 @@
     <h1>Kategorie</h1>
     <nuxt-link to="/">home</nuxt-link>
     <div v-for="item in categories" :key="item.id">
-    <nuxt-link :to="slugToUrl(item.slug)">{{ item.name }}</nuxt-link>
+      <nuxt-link :to="slugToUrl(item.slug)">{{ item.name }}</nuxt-link>
     </div>
   </div>
 </template>

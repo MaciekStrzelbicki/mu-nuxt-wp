@@ -1,32 +1,42 @@
 <template>
-  <div>
-    <v-container fluid="true" grid-list-md text-xs-center>
-    <v-layout row wrap  >
-      <v-flex xs12 sm4 v-if="item.promowany == 'false'" v-for="item in postsPaginated" :key="item.id">
-        <v-card color="rgba(0, 0, 0, 1)" >
-          <v-img
-            :src="item.featured_media"
-            aspect-ratio="1.5"
-          ></v-img>
-          <v-card-title primary-title>
-              <h2><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h2>
-          </v-card-title>
-          <div class="content" v-html="item.content.substring(0, 180) + '...'"></div>
+<div>
+      <v-container fluid="true" grid-list-md text-xs-center>
+      <v-layout row wrap>
+        <v-flex xs12 sm6 v-if="item.promowany == 'false'" v-for="item in postsPaginated" :key="item.id">
+          <v-card min-height="650px" color="rgba(0, 0, 0, 1)" >
+            <v-img
+              :src="item.featured_media"
+              aspect-ratio="2.5"
+            ></v-img>
+            <div class="catbar">
+              <a :class="'class-' + item.category_id" :href="'/category/' + category.slug" v-for="category in item.categories" :key="category.index">{{ category.category_nicename }}</a>
+            </div>
+            <h2><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h2>
+            <div class="content" v-html="item.content.substring(0, 180) + '...'"></div>
 
-          <v-card-actions>
-            <div class="post-footer">
-              <p><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
-              <p><v-icon size="14">face</v-icon>&nbsp;&nbsp;<nuxt-link :to="'/author/' + item.author.slug">{{ item.author.name }}</nuxt-link></p> 
-              <p><nuxt-link :to="slugToUrl(item.slug)">Czytaj dalej <v-icon size="14">navigate_next</v-icon></nuxt-link></p>
-            </div> 
-          </v-card-actions>
-        </v-card>
-      </v-flex>
-    </v-layout>
-    <a v-if="!endPosts" href="#" @click.prevent="addToPostsPaginated()">Następne posty</a>
+            <v-card-actions>
+              <div class="post-footer">
+                <p><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
+                <p><v-icon size="14">face</v-icon>&nbsp;&nbsp;<nuxt-link :to="'/author/' + item.author.slug">{{ item.author.name }}</nuxt-link></p> 
+                <p><nuxt-link :to="slugToUrl(item.slug)">Czytaj dalej <v-icon size="14">navigate_next</v-icon></nuxt-link></p>
+              </div> 
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+      <!-- <v-btn
+      v-if="!endPosts"
+      color="black"
+      class="white--text"
+      @click.prevent="addToPostsPaginated()"
+      >
+      Następne posty
+      <v-icon right dark>expand_more</v-icon>
+    </v-btn> -->
+
+      <!-- <a v-if="!endPosts" href="#" @click.prevent="addToPostsPaginated()">Następne posty</a> -->
     </v-container>
-  </div>
-
+    </div>
 </template>
 
 <script>
@@ -61,29 +71,14 @@ export default {
     this.allPosts = this.posts;
     let posts = this.posts;
     let groups = [], i;
-    for (i = 0; i < posts.length; i += 10) {
-        groups.push(posts.slice(i, i + 10));
+    for (i = 0; i < posts.length; i += 11) {
+        groups.push(posts.slice(i, i + 11));
     }
     this.postsGroups = groups
     this.postsPaginated = groups[0]
+
   },
-  // computed: {
-  //   postsPaginated: () => {
-  //     // let array = [];
-  //     // console.log('data:', data.posts)
-
-  //     console.log(posts)
-
-  //     // var i,j,temparray,chunk = 10;
-  //     // for (i=0,j=data.length; i<j; i+=chunk) {
-  //     //     temparray = array.slice(i,i+chunk);
-  //     //     // do whatever
-  //     // }
-  //   return this.posts
-  //   }
-  // },
   mounted(){
-    // console.log('posts: ', this.posts)
   }
 }
 </script>
@@ -99,7 +94,7 @@ export default {
   }
   .content{
       text-align: left;
-      padding: 0 17px;
+      padding: 0 15px;
   }
   .post-footer{
     display: flex;
@@ -112,10 +107,26 @@ export default {
         text-decoration: none;
       }
       .v-icon {
-          line-height: 0.8;
+        line-height: 1.1;
       }
     }
 
+  }
+  .content{
+    height: 84px;
+  }
+  h2{
+    height: 50px;
+    padding: 0 15px;
+  }
+  .v-image{
+    margin-bottom: 5px;
+  }
+  .catbar{
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 5px;
   }
   
 </style>

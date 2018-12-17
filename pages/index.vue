@@ -1,8 +1,9 @@
 <template>
   <div>
     <main-banner v-if="bannerPosts" :posts="bannerPosts"></main-banner>
-    <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination>
-    <post-list v-if="posts" :posts="posts" :totalPosts="totalPosts" :currentPage="currentPage"></post-list>
+    <tweets :tweets="tweets"></tweets>
+    <!-- <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination> -->
+    <post-list v-if="posts" :posts="posts" :totalPosts="totalPosts" :currentPage="currentPage" :categories="categories"></post-list>
   </div>
 </template>
 
@@ -10,19 +11,20 @@
 
   import { mapGetters } from 'vuex';
   import api from '../api/index.js';
-  import config from '../api/config/index.js'
+  import config from '../api/config/index.js';
   import postList from '../components/PostList';
   import recentPosts from '../components/RecentPosts';
   import categories from '../components/Categories';
   import postsPagination from '../components/PostsPagination';
-  import mainBanner from '../components/MainBanner.vue';
+  import mainBanner from '../components/MainBanner';
+  import tweets from '../components/Tweets';
   import axios from 'axios';
 
   export default {
-    components: { postList, categories, recentPosts, postsPagination, mainBanner },
-  
+    components: { postList, categories, recentPosts, postsPagination, mainBanner, tweets },
     async asyncData({ params }) {
-      let response  = await api.getPosts()
+      let data = await api.getTweets();
+      let response = await api.getPosts();
       let bannerPosts = [];
       response.data.forEach(element => {
         element.promowany ? bannerPosts.push(element) : '';
@@ -32,8 +34,11 @@
         posts: response.data,
         totalPages: response.totalPages,
         totalPosts: response.total,
-        currentPage: 1
-      }
+        currentPage: 1,
+        tweets: data
+        }
+    },    
+    beforeCreate(){      
     },
     mounted() {
       if (this.categories.length === 0) {
@@ -42,6 +47,10 @@
       if (this.posts.length === 0) {
         this.$store.dispatch('getPosts')
       }
+      if (this.tweets.length === 0) {
+        this.$store.dispatch('getTweets')
+      }
+ 
     },
     computed: {
       ...mapGetters([

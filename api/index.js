@@ -73,6 +73,7 @@ export default {
               slug: item.slug,
               featured_media: item._embedded['wp:featuredmedia'] ? item._embedded['wp:featuredmedia'][0].source_url : false, 
               // category_nicename: item.pure_taxonomies.categories[0].category_nicename,
+              category_id: item.pure_taxonomies.categories[0].cat_ID,
               // category_slug: item.pure_taxonomies.categories[0].category_slug,
               categories: item.pure_taxonomies.categories,
               tags: item.pure_taxonomies.tags,
@@ -133,6 +134,18 @@ export default {
         if (response.status === 200 && response.data.length > 0) {
           resolve(data);
         }
+      });
+    });
+  },
+  getTweets() {
+    return new Promise((resolve, reject) => {
+      axios.defaults.baseURL = this.baseUrl;
+      return axios.get(`?rest_route=/utf/utf_by_name/miastoursynow/10/no/`).then(response => {
+        // const data = [...response];
+        // if (response.status === 200 && response.length > 0) {
+          console.log('tweets:', response.data)
+          resolve(response.data);
+        // }
       });
     });
   }

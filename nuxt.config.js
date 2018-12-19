@@ -28,7 +28,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    '@/assets/style/app.styl'
+    '@/assets/style/app.styl',
   ],
 
   /*
@@ -41,10 +41,17 @@ module.exports = {
   /*
   ** Nuxt.js modules
   */
-  modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+  modules: [
+      '@nuxtjs/axios',
+      '@nuxtjs/pwa',
+      
+          'nuxt-sass-resources-loader', 
+          [
+              'assets/scss/_vars.scss',
+              'assets/scss/_main.scss',
+          ]
+      
   ],
   /*
   ** Axios module configuration

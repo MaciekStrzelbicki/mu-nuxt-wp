@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <h1>Kategorie</h1>
-    <nuxt-link to="/">home</nuxt-link>
-    <div v-for="item in categories" :key="item.id">
-      <nuxt-link :to="slugToUrl(item.slug)">{{ item.name }}</nuxt-link>
-    </div>
+  <div id="categories">
+    <nuxt-link :class="'class-' + item.id" :to="slugToUrl(item.slug)" v-for="item in categories" :key="item.id">
+        {{ item.name }}
+      <v-chip small>
+        {{ item.count }}
+      </v-chip>
+    </nuxt-link>
   </div>
 </template>
 <script>
@@ -29,7 +30,21 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss"> 
+#categories{
+  padding-top: 20px;
+  a{
+    display: block;
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: 900;
+    padding: 10px 5px;
+    border-bottom: 1px solid #303030;
+    &:hover{
+      background-color: #303030;
+    }
+  }
+}
 
 </style>

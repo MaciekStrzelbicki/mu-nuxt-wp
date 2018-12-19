@@ -2,7 +2,11 @@
   <v-app dark>
     <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
     <v-navigation-drawer :mini-variant="miniVariant" :clipped="clipped" v-model="drawer" fixed app>
-      <categories/>
+      <div id="nav-wrap">
+        <a href="/" id="logo"><img src="~/assets/mu-logo.png"></a>
+        <categories/>  
+      </div>  
+    
     </v-navigation-drawer>
     <v-toolbar :clipped-left="clipped" fixed app>
       <v-toolbar-side-icon @click="drawer = !drawer"/>
@@ -14,19 +18,15 @@
       </no-ssr>
       <v-footer dark height="auto">
         <v-card class="flex" flat tile>
-          <v-card-title class="teal">
-            <strong class="subheading">Get connected with us on social networks!</strong>
-
+          <v-card-title class="">
+            <strong class="subheading">&copy;MiastoUrsynów</strong>
             <v-spacer></v-spacer>
-
-            <v-btn v-for="icon in icons" :key="icon" class="mx-3" dark icon>
-              <v-icon size="24px">{{ icon }}</v-icon>
+            <v-btn v-for="social in socials" :key="social.index" class="mx-3" icon>
+              <a target="_blank" :href="social.link">
+                <v-icon size="24px">{{ social.icon }}</v-icon>
+              </a>
             </v-btn>
           </v-card-title>
-
-          <v-card-actions class="grey darken-3 justify-center">&copy;2018 —
-            <strong>Vuetify</strong>
-          </v-card-actions>
         </v-card>
       </v-footer>
     </v-content>
@@ -46,11 +46,14 @@ export default {
         { icon: "apps", title: "Welcome", to: "/" },
         { icon: "bubble_chart", title: "Inspire", to: "/inspire" }
       ],
-      icons: [],
+      socials: [ 
+        { icon: 'fab fa-facebook', link: 'http://facebook.com'},
+        { icon: 'fab fa-twitter', link: 'http://twitter.com'}
+      ],
       miniVariant: false,
       right: false,
       rightDrawer: false,
-      title: "Vuetify.js"
+      title: "Miasto Ursynów. #nieformalnie #lokalnie #sąsiedzko"
     };
   }
 };
@@ -70,19 +73,49 @@ export default {
     font-weight: bold;
   }
 }
-.class-7 {
-  background-color: #f34235;
+.catbar{
+  .class-7 {
+    background-color: $color-1;
+  }
+  .class-2 {
+    background-color: $color-2;
+  }
+  .class-1 {
+    background-color: $color-3;
+  }
+  .class-11 {
+    background-color: $color-4;
+  }
+  .class-21 {
+    background-color: $color-5;
+  }
 }
-.class-2 {
-  background-color: #3e50b4;
+#categories{
+  .class-7 {
+    color: $color-1;
+  }
+  .class-2 {
+    color: $color-2;
+  }
+  .class-1 {
+    color: $color-3;
+  }
+  .class-11 {
+    color: $color-4;
+  }
+  .class-21 {
+    color: $color-5;
+  }
 }
-.class-1 {
-  background-color: #4bae4f;
+#logo{
+    img{
+      display: inline-block;
+      margin: 0 auto;
+    }
+  display: flex;
+  align-items: center;
 }
-.class-11 {
-  background-color: #fe9700;
-}
-.class-21 {
-  background-color: #2095f2;
+#nav-wrap{
+  padding: 20px;
 }
 </style>

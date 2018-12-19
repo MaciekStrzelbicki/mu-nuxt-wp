@@ -2,8 +2,9 @@
 <div>
       <v-container fluid="true" grid-list-md text-xs-center>
       <v-layout row wrap>
-        <v-flex xs12 sm6 v-if="item.promowany == 'false'" v-for="item in postsPaginated" :key="item.id">
-          <v-card min-height="650px" color="rgba(0, 0, 0, 1)" >
+        <twitter-feed :tweets="tweets"></twitter-feed>
+        <v-flex xs12 sm4 v-if="item.promowany == 'false'" v-for="item in postsPaginated" :key="item.id">
+          <v-card min-height="650px" color="#212121" >
             <v-img
               :src="item.featured_media"
               aspect-ratio="2.5"
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-
+import twitterFeed from '@/components/TwitterFeed'
 export default {
   data: () => ({
       postsPaginated: [],
@@ -49,7 +50,8 @@ export default {
       displayPage: 1,
       endPosts: false
   }),
-  props: ['posts', 'title', 'totalPosts', 'currentPage'],
+  props: ['posts', 'title', 'totalPosts', 'currentPage', 'tweets'],
+  components: {twitterFeed},
   methods: {
     slugToUrl(slug) {
       return `/${slug}`

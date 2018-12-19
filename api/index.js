@@ -3,7 +3,7 @@ import config from "@/api/config";
 
 export default {
   baseUrl: config.baseUrl,
-
+  altUrl: config.altUrl,
   getPage(slug) {
     return new Promise((resolve, reject) => {
       axios.defaults.baseURL = this.baseUrl;
@@ -130,6 +130,7 @@ export default {
     return new Promise((resolve, reject) => {
       axios.defaults.baseURL = this.baseUrl;
       return axios.get(`categories`).then(response => {
+        console.log('categories: ', response )
         const data = [...response.data];
         if (response.status === 200 && response.data.length > 0) {
           resolve(data);
@@ -139,8 +140,8 @@ export default {
   },
   getTweets() {
     return new Promise((resolve, reject) => {
-      axios.defaults.baseURL = this.baseUrl;
-      return axios.get(`?rest_route=/utf/utf_by_name/miastoursynow/10/no/`).then(response => {
+      axios.defaults.baseURL = this.altUrl;
+      return axios.get(`?rest_route=/utf/utf_by_name/miastoursynow/10/yes/`).then(response => {
         // const data = [...response];
         // if (response.status === 200 && response.length > 0) {
           console.log('tweets:', response.data)
@@ -149,4 +150,18 @@ export default {
       });
     });
   }
+  // getTweets() {
+  //   return new Promise((resolve, reject) => {
+  //     return axios.get(`//miastoursynow.pl/wp/get_tweets.php`).then(response => {
+  //       // const data = [...response];
+  //       // if (response.status === 200 && response.length > 0) {
+  //         console.log('tweets:', response)
+  //         resolve(response);
+  //       // }
+  //     });
+  //   });
+  // }
+
+
+  
 };

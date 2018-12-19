@@ -1,9 +1,8 @@
 <template>
   <div>
     <main-banner v-if="bannerPosts" :posts="bannerPosts"></main-banner>
-    <tweets :tweets="tweets"></tweets>
-    <!-- <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination> -->
-    <post-list v-if="posts" :posts="posts" :totalPosts="totalPosts" :currentPage="currentPage" :categories="categories"></post-list>
+    <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination>
+    <post-list v-if="posts" :posts="posts" :totalPosts="totalPosts" :currentPage="currentPage" :categories="categories" :tweets="tweets"></post-list>
   </div>
 </template>
 
@@ -17,11 +16,10 @@
   import categories from '../components/Categories';
   import postsPagination from '../components/PostsPagination';
   import mainBanner from '../components/MainBanner';
-  import tweets from '../components/Tweets';
   import axios from 'axios';
 
   export default {
-    components: { postList, categories, recentPosts, postsPagination, mainBanner, tweets },
+    components: { postList, categories, recentPosts, postsPagination, mainBanner },
     async asyncData({ params }) {
       let data = await api.getTweets();
       let response = await api.getPosts();

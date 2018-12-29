@@ -2,7 +2,7 @@
   <div>
     <main-banner v-if="bannerPosts" :posts="bannerPosts"></main-banner>
     <posts-pagination v-if="totalPages > 1" :totalPosts="totalPosts" :totalPages="totalPages" :currentPage="currentPage"></posts-pagination>
-    <post-list v-if="posts" :posts="posts" :totalPosts="totalPosts" :currentPage="currentPage" :categories="categories" :tweets="tweets"></post-list>
+    <post-list v-if="posts" :posts="posts" :totalPosts="totalPosts" :currentPage="currentPage" :categories="categories" :category="'all'" :tweets="tweets"></post-list>
   </div>
 </template>
 

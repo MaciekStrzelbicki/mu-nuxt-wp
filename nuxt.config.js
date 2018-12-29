@@ -22,7 +22,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#000' },
+  loading: { color: '#fff' },
 
   /*
   ** Global CSS
@@ -30,7 +30,6 @@ module.exports = {
   css: [
     '@/assets/style/app.styl',
   ],
-
   /*
   ** Plugins to load before mounting the App
   */
@@ -43,15 +42,12 @@ module.exports = {
   */
     // Doc: https://github.com/nuxt-community/axios-module#usage
   modules: [
-      '@nuxtjs/axios',
-      '@nuxtjs/pwa',
-      
-          'nuxt-sass-resources-loader', 
-          [
-              'assets/scss/_vars.scss',
-              'assets/scss/_main.scss',
-          ]
-      
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa',
+    
+    ['nuxt-sass-resources-loader', [
+      '@/assets/scss/_vars.scss'
+    ]],
   ],
   /*
   ** Axios module configuration

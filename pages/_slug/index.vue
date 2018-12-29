@@ -1,13 +1,17 @@
 <template>
-  <div>
-      <categories :categories="categories"></categories>
-      <h1>{{ post.title.rendered }}</h1>
-      <a :href="'/category/' + post.pure_taxonomies.categories[0].slug">{{ post.pure_taxonomies.categories[0].cat_name }}</a> 
-      <div v-html="post.content.rendered"></div>
-      <img v-if="featured_image()" :src="post.better_featured_image.source_url" :alt="post.better_featured_image.alt_txt">
-      recent-posts:
-      <recent-posts v-if="posts" :posts="posts"></recent-posts>
-  </div>
+<div>
+    <v-img max-height="400px" v-if="featured_image()" :src="post.better_featured_image.source_url" :alt="post.better_featured_image.alt_txt"></v-img>
+    <div id="post-view">
+        <h1>{{ post.title.rendered }}</h1>
+        <div class="catbar">
+          <a :class="'class-' + category.term_id" :href="'/category/' + category.slug" v-for="category in post.pure_taxonomies.categories" :key="category.index">{{ category.category_nicename }}</a>
+        </div>
+        <div class="tags">
+          <a v-for="tag in post.pure_taxonomies.tags" :key="tag.index" :href="'tagi/' + tag.slug">{{ tag.name }}</a>
+        </div>
+        <div id="post-view" v-html="post.content.rendered"></div>
+    </div>
+</div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -48,6 +52,21 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+#post-view{
+  max-width: 600px;
+  margin: 0 auto;
+  p{
+    font-size: 1.5rem;
+  }
+  .tags{
+    padding-left: 0;
+    a{
+      background-color: rgb(33, 33, 33);
+      &:hover{
+        background-color: #000;
+      }
+    }
+  }
+}
 </style>

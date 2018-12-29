@@ -1,16 +1,15 @@
 <template>
   <v-app dark>
     <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
-    <v-navigation-drawer :mini-variant="miniVariant" :clipped="clipped" v-model="drawer" fixed app>
+    <v-navigation-drawer :mini-variant="miniVariant" :clipped="clipped" v-model="drawer"  app>
       <div id="nav-wrap">
         <a href="/" id="logo"><img src="~/assets/mu-logo.png"></a>
         <categories/>  
       </div>  
-    
     </v-navigation-drawer>
     <v-toolbar :clipped-left="clipped" fixed app>
       <v-toolbar-side-icon @click="drawer = !drawer"/>
-      <v-toolbar-title v-text="title"/>
+      <a href="/">Miasto Ursynów. #nieformalnie #lokalnie #sąsiedzko</a>
     </v-toolbar>
     <v-content>
       <no-ssr>
@@ -23,7 +22,7 @@
             <v-spacer></v-spacer>
             <v-btn v-for="social in socials" :key="social.index" class="mx-3" icon>
               <a target="_blank" :href="social.link">
-                <v-icon size="24px">{{ social.icon }}</v-icon>
+                <v-icon size="24px" color="#fff">{{ social.icon }}</v-icon>
               </a>
             </v-btn>
           </v-card-title>
@@ -42,10 +41,6 @@ export default {
       clipped: true,
       drawer: true,
       fixed: true,
-      items: [
-        { icon: "apps", title: "Welcome", to: "/" },
-        { icon: "bubble_chart", title: "Inspire", to: "/inspire" }
-      ],
       socials: [ 
         { icon: 'fab fa-facebook', link: 'http://facebook.com'},
         { icon: 'fab fa-twitter', link: 'http://twitter.com'}
@@ -117,5 +112,32 @@ export default {
 }
 #nav-wrap{
   padding: 20px;
+}
+.v-toolbar{
+  a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    margin-top: 3px;
+    display: inline-block;
+  }
+}
+.tags{
+  text-align: left;
+  padding-left: 15px;
+  height: 1.5em;
+  margin-bottom: 5px;
+  a{
+    font-size: .8rem;
+    display: inline-block;
+    background-color: #303030;
+    color: #ccc;
+    padding: 3px 7px;
+    text-decoration: none;
+    margin-right: 5px;
+    &:hover{
+      background-color: #000;
+    }
+  }
 }
 </style>

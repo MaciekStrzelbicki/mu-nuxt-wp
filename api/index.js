@@ -60,7 +60,7 @@ export default {
       axios.defaults.baseURL = this.baseUrl;
       axios.get(`posts?_embed&per_page=100&${query}`).then(response => {
         const data = [...response.data];
-        // console.log('data w getPosts(): ', data);
+        console.log('data w getPosts(): ', data);
         if (response.status === 200 && response.data.length > 0) {
           const filtered = {
             total: response.headers["x-wp-total"],
@@ -79,7 +79,8 @@ export default {
               tags: item.pure_taxonomies.tags,
               promowany: item.promowany && item.promowany != 'Niepromowany' ? item.promowany[0] : false,
               date: item.date.split('T')[0].split('-')[2] + '-' + item.date.split('T')[0].split('-')[1] + '-' + item.date.split('T')[0].split('-')[0],
-              author: item._embedded.author[0]
+              author: item._embedded.author[0],
+              tags: item._embedded['wp:term'][1]
             }))
           };
           // console.log('w getPosts() filtered: ', filtered)
@@ -141,7 +142,7 @@ export default {
   getTweets() {
     return new Promise((resolve, reject) => {
       axios.defaults.baseURL = this.altUrl;
-      return axios.get(`?rest_route=/utf/utf_by_name/miastoursynow/10/yes/`).then(response => {
+      return axios.get(`?rest_route=/utf/utf_by_name/miastoursynow/2/no/`).then(response => {
         // const data = [...response];
         // if (response.status === 200 && response.length > 0) {
           console.log('tweets:', response.data)

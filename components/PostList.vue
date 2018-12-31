@@ -3,30 +3,36 @@
     <v-container fluid grid-list-md text-xs-center>
       <v-layout row fill-height wrap>
         <twitter-feed v-if="tweets" :tweets="tweets"></twitter-feed>
-          <v-flex xs12 sm4 v-if="item.promowany == 'false' && category == 'all' || item.categories[0].cat_name == category" v-for="item in postsPaginated" :key="item.id">
-            <!-- <h2>{{category}} == {{item.categories[0].cat_name}} ||</h2> -->
+          
+          <v-flex xs12 sm4 
+            v-if="post.promowany == 'false' && category == 'all' && viewType != 'kategoria-slug' && viewType != 'tag-slug'
+            || post.katShow && viewType == 'kategoria-slug' 
+            || post.tagShow && viewType == 'tag-slug'" 
+            v-for="post in posts" 
+            :key="post.id">
+
             <v-card color="#212121" >
-              <p class="date"><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ item.date }} </p>
+              <p class="date"><v-icon size="14">calendar_today</v-icon>&nbsp;&nbsp;{{ post.date }} </p>
               <v-img
-                :src="item.featured_media"
+                :src="post.featured_media"
                 aspect-ratio="2.5"
               ></v-img>
               <div class="catbar">
-                <a :class="'class-' + item.category_id" :href="'/category/' + category.slug" v-for="category in item.categories" :key="category.index">{{ category.category_nicename }}</a>
+                <nuxt-link :class="'class-' + category.cat_ID" :to="categoryUrl(category.slug)" v-for="category in post.categories" :key="category.index">{{ category.category_nicename }}</nuxt-link>
               </div>
-              <!-- <h2><nuxt-link :to="slugToUrl(item.slug)" v-html="titleEx(item.title)"></nuxt-link></h2> -->
-              <h2 v-html="titleEx(item.title)"></h2>
-              <div class="content" v-html="item.content.substring(0,170) + '...'"></div>
+              <h2 v-html="titleEx(post.title)"></h2>
+              <div class="content" v-html="post.content.substring(0,170) + '...'"></div>
               <div class="tags">
-                <a v-for="tag in item.tags" :key="tag.index" :href="'tagi/' + tag.slug">{{ tag.name }}</a>
+                <nuxt-link v-for="tag in post.tags" :key="tag.index" :to="'/tag/' + tag.slug">{{ tag.name }}</nuxt-link>
               </div>
                 <div class="post-footer">
-                  <v-btn flat :to="'/author/' + item.author.slug" color="white"><v-icon size="14">face</v-icon>&nbsp;{{ item.author.name }}</v-btn>
-                  <v-btn flat :to="slugToUrl(item.slug)" color="white">Czytaj dalej <v-icon size="16">navigate_next</v-icon></v-btn>
+                  <v-btn flat :to="authorUrl(post.author.slug)" color="white"><v-icon size="14">face</v-icon>&nbsp;{{ post.author.name }}</v-btn>
+                  <v-btn flat :to="slugToUrl(post.slug)" color="white">Czytaj dalej <v-icon size="16">navigate_next</v-icon></v-btn>
                 </div>
             </v-card>
           </v-flex>
         </v-layout>
+            <!-- <a v-if="!endPosts" href="#" @click.prevent="addToPostsPaginated()">Następne posty</a> -->
       </v-container>
     </div>
 </template>
@@ -39,11 +45,15 @@ export default {
       allPosts: [],
       postsGroups: [],
       displayPage: 1,
-      endPosts: false
+      endPosts: false,
+      view: ''
   }),
-  props: ['posts', 'title', 'totalPosts', 'currentPage', 'tweets', 'category'],
+  props: ['posts', 'title', 'totalPosts', 'currentPage', 'tweets', 'category', 'tag'],
   components: {twitterFeed},
   computed:{
+    viewType: function () {
+      return this.$route.name
+    } 
   },
   methods: {
     slugToUrl(slug) {
@@ -67,17 +77,36 @@ export default {
           this.endPosts = true;
         }
       } 
+    },
+    paginatePosts(){
+      this.allPosts = this.posts;
+      let posts = this.posts;
+      let groups = [], i;
+      for (i = 0; i < posts.length; i += 11) {
+          groups.push(posts.slice(i, i + 11));
+      }
+      this.postsGroups = groups
+      this.postsPaginated = groups[0]
+    },
+    checkCategory(){
+      this.posts.forEach(post => {
+        post.categories.forEach(cat => {
+          cat.cat_name == this.category ? post.katShow = true : post.katShow
+        })
+      })
+    },
+    checkTag(){
+      this.posts.forEach(post => {
+        post.tags.forEach(tag => {
+          tag.name == this.tag ? post.tagShow = true : post.tagShow
+        })
+      })
     }
   },
   created() {
-    this.allPosts = this.posts;
-    let posts = this.posts;
-    let groups = [], i;
-    for (i = 0; i < posts.length; i += 11) {
-        groups.push(posts.slice(i, i + 11));
-    }
-    this.postsGroups = groups
-    this.postsPaginated = groups[0]
+    this.paginatePosts();
+    this.checkCategory();
+    this.checkTag();
 
   },
   mounted(){
@@ -97,7 +126,6 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      // height: 2em;
     a{
       color: #fff;
       text-decoration: none;

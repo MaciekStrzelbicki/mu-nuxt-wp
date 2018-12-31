@@ -8,15 +8,15 @@
               <v-layout align-end fill-height :style='{ backgroundImage: `url(${item.featured_media})` }'>
                 <div class="overlay">
                   <div class="catbar">
-                    <a :class="'class-' + category.term_id" :href="'/category/' + category.slug" v-for="category in item.categories" :key="category.index">{{ category.category_nicename }}</a>
+                    <nuxt-link :class="'class-' + category.term_id" :to="categoryUrl(category.slug)" v-for="category in item.categories" :key="category.index">{{ category.category_nicename }}</nuxt-link>
                   </div>
                   <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
                   <div class="excerpt" v-html="item.content.substring(0, 300) + '...'"></div>
                   <div class="tags">
-                    <a v-for="tag in item.tags" :key="tag.index" :href="'tagi/' + tag.slug">{{ tag.name }}</a>
+                    <nuxt-link v-for="tag in item.tags" :key="tag.index" :to="tagUrl(tag.slug)">{{ tag.name }}</nuxt-link> 
                   </div>
                   <div class="post-footer">
-                    <v-btn flat :to="'/author/' + item.author.slug" color="white"><v-icon size="14">face</v-icon>&nbsp;{{ item.author.name }}</v-btn>
+                    <v-btn flat :to="authorUrl(item.author.slug)" color="white"><v-icon size="14">face</v-icon>&nbsp;{{ item.author.name }}</v-btn>
                     <v-btn flat :to="slugToUrl(item.slug)" color="white">Czytaj dalej <v-icon size="16">navigate_next</v-icon></v-btn>
                   </div>     
                 </div>
@@ -31,14 +31,14 @@
                   <v-layout align-end fill-height :style='{ backgroundImage: `url(${item.featured_media})` }'>
                     <div class="overlay">
                       <div class="catbar">
-                        <a :class="'class-' + category.term_id" :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
+                        <nuxt-link :class="'class-' + category.term_id" :to="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</nuxt-link>
                       </div>            
                       <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
                       <div class="tags">
-                        <a v-for="tag in item.tags" :key="tag.index" :href="'tagi/' + tag.slug">{{ tag.name }}</a>
+                        <nuxt-link v-for="tag in item.tags" :key="tag.index" :to="tagUrl(tag.slug)">{{ tag.name }}</nuxt-link>
                       </div>
                       <div class="post-footer">
-                        <v-btn flat :to="'/author/' + item.author.slug" color="white"><v-icon size="14">face</v-icon>&nbsp;{{ item.author.name }}</v-btn>
+                        <v-btn flat :to="authorUrl(item.author.slug)" color="white"><v-icon size="14">face</v-icon>&nbsp;{{ item.author.name }}</v-btn>
                         <v-btn flat :to="slugToUrl(item.slug)" color="white">Czytaj dalej <v-icon size="16">navigate_next</v-icon></v-btn>
                       </div>                          
                     </div>
@@ -51,14 +51,14 @@
                   <v-layout align-end fill-height :style='{ backgroundImage: `url(${item.featured_media})` }'>
                     <div class="overlay">
                       <div class="catbar">
-                        <a :class="'class-' + category.term_id" :href="category.slug" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</a>
+                        <nuxt-link :class="'class-' + category.term_id" :to="categoryUrl(category.slug)" v-for="category in item.categories" :key="category.id">{{ category.category_nicename }}</nuxt-link>
                       </div>            
                       <h1><nuxt-link :to="slugToUrl(item.slug)">{{ item.title }}</nuxt-link></h1>
                       <div class="tags">
-                        <a v-for="tag in item.tags" :key="tag.index" :href="'tagi/' + tag.slug">{{ tag.name }}</a>
+                        <nuxt-link v-for="tag in item.tags" :key="tag.index" :to="tagUrl(tag.slug)">{{ tag.name }}</nuxt-link>
                       </div>
                       <div class="post-footer">
-                        <v-btn flat :to="'/author/' + item.author.slug" color="white"><v-icon size="14">face</v-icon>&nbsp;{{ item.author.name }}</v-btn>
+                        <v-btn flat :to="authorUrl(item.author.slug)" color="white"><v-icon size="14">face</v-icon>&nbsp;{{ item.author.name }}</v-btn>
                         <v-btn flat :to="slugToUrl(item.slug)" color="white">Czytaj dalej <v-icon size="16">navigate_next</v-icon></v-btn>
                       </div>                          
                     </div>
@@ -75,17 +75,12 @@
 export default {
   props: ['posts'],
   methods: {
-    slugToUrl(slug) {
-      return `/${slug}`
-    }
+
   },
   computed: {
-    // excerpt: (string, value) => {
-    //   return string.split(0, value) + '…';
-    // }
+
   },
   mounted(){
-    // console.log('posts: ', this.posts)
   }
 }
 </script>
@@ -116,7 +111,6 @@ export default {
     height: 250px;
   }
   .overlay{
-    // height: 30%;
     background-color: rgba(0,0,0,0.8);
     width: 100%;
     padding: 10px;

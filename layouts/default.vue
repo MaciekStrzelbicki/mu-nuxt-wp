@@ -9,7 +9,7 @@
     </v-navigation-drawer>
     <v-toolbar :clipped-left="clipped" fixed app>
       <v-toolbar-side-icon @click="drawer = !drawer"/>
-      <a href="/">Miasto Ursynów. #nieformalnie #lokalnie #sąsiedzko</a>
+      <a href="/">Miasto Ursynów.<span class="grey-txt"> #nieformalnie #lokalnie #sąsiedzko</span></a>
     </v-toolbar>
     <v-content>
       <no-ssr>
@@ -20,11 +20,11 @@
           <v-card-title class="">
             <strong class="subheading">&copy;MiastoUrsynów</strong>
             <v-spacer></v-spacer>
-            <v-btn v-for="social in socials" :key="social.index" class="mx-3" icon>
+            <!-- <v-btn v-for="social in socials" :key="social.index" class="mx-3" icon>
               <a target="_blank" :href="social.link">
                 <v-icon size="24px" color="#fff">{{ social.icon }}</v-icon>
               </a>
-            </v-btn>
+            </v-btn> -->
           </v-card-title>
         </v-card>
       </v-footer>
@@ -59,7 +59,6 @@ export default {
   margin-bottom: 5px;
   a {
     padding: 2px 10px;
-    // background-color: red;
     color: #fff;
     display: inline-block;
     text-decoration: none;
@@ -139,5 +138,8 @@ export default {
       background-color: #000;
     }
   }
+}
+.grey-txt{
+  color: #424242;
 }
 </style>

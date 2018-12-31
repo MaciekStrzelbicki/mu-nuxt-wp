@@ -13,13 +13,12 @@
   import config from '../api/config/index.js';
   import postList from '../components/PostList';
   import recentPosts from '../components/RecentPosts';
-  import categories from '../components/Categories';
   import postsPagination from '../components/PostsPagination';
   import mainBanner from '../components/MainBanner';
   import axios from 'axios';
 
   export default {
-    components: { postList, categories, recentPosts, postsPagination, mainBanner },
+    components: { postList, recentPosts, postsPagination, mainBanner },
     async asyncData({ params }) {
       let data = await api.getTweets();
       let response = await api.getPosts();

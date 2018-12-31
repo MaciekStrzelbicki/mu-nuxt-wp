@@ -4,10 +4,10 @@
     <div id="post-view">
         <h1>{{ post.title.rendered }}</h1>
         <div class="catbar">
-          <a :class="'class-' + category.term_id" :href="'/category/' + category.slug" v-for="category in post.pure_taxonomies.categories" :key="category.index">{{ category.category_nicename }}</a>
+          <nuxt-link :class="'class-' + category.term_id" :to="categoryUrl(category.slug)" v-for="category in post.pure_taxonomies.categories" :key="category.index">{{ category.category_nicename }}</nuxt-link>
         </div>
         <div class="tags">
-          <a v-for="tag in post.pure_taxonomies.tags" :key="tag.index" :href="'tagi/' + tag.slug">{{ tag.name }}</a>
+          <nuxt-link v-for="tag in post.pure_taxonomies.tags" :key="tag.index" :to="tagUrl(tag.slug)">{{ tag.name }}</nuxt-link>
         </div>
         <div id="post-view" v-html="post.content.rendered"></div>
     </div>
@@ -32,7 +32,6 @@ export default {
   mounted() {
     this.$store.dispatch('getPosts');
     this.$store.dispatch('getCategories');
-    // console.log('aaa:',   this.post)
   },
   computed: {
     ...mapGetters([

@@ -1,6 +1,6 @@
 <template>
   <div id="categories">
-    <nuxt-link :class="'class-' + item.id" :to="slugToUrl(item.slug)" v-for="item in categories" :key="item.id">
+    <nuxt-link v-if="item.count > 0" :class="'class-' + item.id" :to="slugToUrl(item.slug)" v-for="item in categories" :key="item.id">
         {{ item.name }}
       <v-chip small>
         {{ item.count }}
@@ -14,7 +14,7 @@ import { mapGetters } from 'vuex';
 export default {
   methods: {
     slugToUrl(slug) {
-      return `/category/${slug}`
+      return `/kategoria/${slug}`
     }
   },
   mounted() {
